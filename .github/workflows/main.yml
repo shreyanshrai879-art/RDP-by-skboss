@@ -1,0 +1,27 @@
+name: Avica RDP Deployment
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 360
+
+    steps:
+    - name: Download and Extract Avica
+      run: |
+        Invoke-WebRequest -Uri "https://avica.com" -OutFile "Avica_Setup.exe"
+        Start-Process -FilePath "Avica_Setup.exe" -ArgumentList "/S" -Wait
+        
+    - name: Keep Active & Generate Connection Details
+      run: |
+        echo "===================================================="
+        echo "Avica RDP is setting up! Open the Avica app on the VM"
+        echo "or look for the ID/Password generated in the logs."
+        echo "===================================================="
+        $loop = $true
+        while ($loop) {
+          Start-Sleep -Seconds 30
+        }
+        
